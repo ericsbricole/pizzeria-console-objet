@@ -1,5 +1,8 @@
 package fr.pizzeria.console;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import com.sun.org.apache.bcel.internal.generic.DALOAD;
@@ -9,6 +12,9 @@ import fr.pizzeria.console.service.ListerPizzasService;
 import fr.pizzeria.console.service.MenuService;
 import fr.pizzeria.console.service.ModifierPizzaService;
 import fr.pizzeria.console.service.SupprimerPizzaService;
+import fr.pizzeria.exception.SavePizzaException;
+import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.model.IPizzaMemDao;
 import fr.pizzeria.model.Pizza;
 import fr.pizzeria.model.PizzaMemDao;
@@ -26,14 +32,14 @@ public class PizzeriaAdminConsole {
 		modifierService.setDao(dao);
 		SupprimerPizzaService supprimerService = new SupprimerPizzaService();
 		supprimerService.setDao(dao);
-		
+				
 		Scanner sc = new Scanner(System.in);
 		int choice = 0;		
 		while (choice != 99){
 			System.out.println("***Pizzeria administration****");
 			System.out.println("1. Lister les pizza");
 			System.out.println("2. Ajouter une nouvelle pizza");
-			System.out.println("3. Mettre à jour une pizza");
+			System.out.println("3. Mettre Ã  jour une pizza");
 			System.out.println("4. Supprimer une pizza");
 			System.out.println("99. Sortir");
 			choice = sc.nextInt();
@@ -43,19 +49,30 @@ public class PizzeriaAdminConsole {
 			}
 			
 			if (choice == 2){
-				ajouterService.executeUC(sc);
+				try {
+					ajouterService.executeUC(sc);
+				} catch (SavePizzaException e) {
+					System.err.println(e.getMessage());
+				}
 			}
 			
 			if (choice == 3){
-				modifierService.executeUC(sc);				
+				try {
+					modifierService.executeUC(sc);
+				} catch (UpdatePizzaException e) {
+					System.err.println(e.getMessage());
+				}				
 			}
 			
 			if (choice == 4){
-				supprimerService.executeUC(sc);
+				try {
+					supprimerService.executeUC(sc);
+				} catch (StockageException e) {
+					System.err.println(e.getMessage());
+				}
 				
 			}
 		}
-		
 		System.out.println("Au revoir + \u2639!");
 	}
 

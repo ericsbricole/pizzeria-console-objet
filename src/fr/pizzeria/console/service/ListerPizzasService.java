@@ -25,7 +25,7 @@ public class ListerPizzasService extends MenuService{
 		for (int i = 0; i < pizzas.length; i++){
 			Pizza pizza = pizzas[i];
 			if (pizza != null)
-			System.out.println(pizza.getCode() + "->" + pizza.getLibelle() + "(" + pizza.getPrix() + ")");
+			System.out.println(pizza.getCode() + "->" + pizza.getLibelle() + "(" + pizza.getPrix() + ") Catégorie: " + pizza.getCategoriePizza());
 		}
 		System.out.println("");
 		

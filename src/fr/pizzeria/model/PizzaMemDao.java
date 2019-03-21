@@ -3,14 +3,14 @@ package fr.pizzeria.model;
 public class PizzaMemDao implements IPizzaMemDao{
 	
 	private Pizza[] pizzas = {
-			new Pizza("PEP", "Pepperroni", 12.50),
-			new Pizza("MAR", "Margherita", 14.00),
-			new Pizza("REIN", "La Reine", 11.50),
-			new Pizza("FRO", "La 4 fromages", 12.00),
-			new Pizza("CAN", "La cannibale", 12.50),
-			new Pizza("SAV", "La Savoyarde", 13.00),
-			new Pizza("ORI", "L'orientale", 13.50),
-			new Pizza("IND", "L'indienne", 14.00)
+			new Pizza("PEP", "Pepperroni", 12.50, CategoriePizza.SANS_VIANDE),
+			new Pizza("MAR", "Margherita", 14.00, CategoriePizza.SANS_VIANDE),
+			new Pizza("REIN", "La Reine", 11.50, CategoriePizza.POISSON),
+			new Pizza("FRO", "La 4 fromages", 12.00, CategoriePizza.SANS_VIANDE),
+			new Pizza("CAN", "La cannibale", 12.50, CategoriePizza.VIANDE),
+			new Pizza("SAV", "La Savoyarde", 13.00, CategoriePizza.VIANDE),
+			new Pizza("ORI", "L'orientale", 13.50, CategoriePizza.VIANDE),
+			new Pizza("IND", "L'indienne", 14.00, CategoriePizza.VIANDE)
 	};
 		
 	public Pizza[] getPizzas() {

@@ -3,7 +3,7 @@ package fr.pizzeria.model;
 
 /**
  * @author Pennecot
- * Cette classe représente une pizza
+ * Cette classe reprï¿½sente une pizza
  */
 public class Pizza {
 
@@ -26,22 +26,24 @@ public class Pizza {
 	 */
 	private double prix;
 	/**
-	 * compteur du nombre de pizza instanciée
+	 * compteur du nombre de pizza instanciï¿½e
 	 */
 	private static int cpt = 0;
 	
+	private CategoriePizza categoriePizza;
 	
 	/**
 	 * @param code
 	 * @param libelle
 	 * @param prix
 	 */
-	public Pizza(String code, String libelle, double prix){
+	public Pizza(String code, String libelle, double prix, CategoriePizza categoriePizza){
 		this.code = code;
 		this.libelle = libelle;
 		this.prix = prix;
 		cpt++;
 		this.id = cpt;
+		this.categoriePizza = categoriePizza;
 	}
 	
 
@@ -51,11 +53,12 @@ public class Pizza {
 	 * @param libelle
 	 * @param prix
 	 */
-	public Pizza(int id, String code, String libelle, double prix){
+	public Pizza(int id, String code, String libelle, double prix, CategoriePizza categoriePizza){
 		this.code = code;
 		this.libelle = libelle;
 		this.prix = prix;
 		this.id = id;
+		this.categoriePizza = categoriePizza;
 	}
 
 	public int getId() {
@@ -89,6 +92,22 @@ public class Pizza {
 	public void setPrix(double prix) {
 		this.prix = prix;
 	}
+
+	public CategoriePizza getCategoriePizza() {
+		return categoriePizza;
+	}
+
+
+	public void setCategoriePizza(CategoriePizza categoriePizza) {
+		this.categoriePizza = categoriePizza;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Pizza [id=" + id + ", code=" + code + ", libelle=" + libelle + ", prix=" + prix + "categorie = " + categoriePizza + "]";
+	}
+	
 	
 	
 }
