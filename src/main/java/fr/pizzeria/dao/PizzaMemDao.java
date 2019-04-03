@@ -3,7 +3,7 @@ package fr.pizzeria.dao;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
-public class PizzaMemDao implements IPizzaMemDao{
+public class PizzaMemDao implements IPizzaDao{
 	
 	private Pizza[] pizzas = {
 			new Pizza("PEP", "Pepperroni", 12.50, CategoriePizza.SANS_VIANDE),

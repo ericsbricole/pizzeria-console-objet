@@ -2,7 +2,7 @@ package fr.pizzeria.dao;
 
 import fr.pizzeria.model.Pizza;
 
-public interface IPizzaMemDao {
+public interface IPizzaDao {
 	
 	Pizza[] findAllPizzas();
 	void saveNewPizza(Pizza pizza);

@@ -2,7 +2,7 @@ package fr.pizzeria.console.service;
 
 import java.util.Scanner;
 
-import fr.pizzeria.dao.IPizzaMemDao;
+import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.dao.PizzaMemDao;
 import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.model.CategoriePizza;
@@ -10,13 +10,13 @@ import fr.pizzeria.model.Pizza;
 
 public class AjouterPizzaService extends MenuService {
 	
-	private IPizzaMemDao dao;
+	private IPizzaDao dao;
 
-	public IPizzaMemDao getDao() {
+	public IPizzaDao getDao() {
 		return dao;
 	}
 	
-	public void setDao(IPizzaMemDao dao) {
+	public void setDao(IPizzaDao dao) {
 		this.dao = dao;
 	}
 

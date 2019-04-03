@@ -2,26 +2,26 @@ package fr.pizzeria.console.service;
 
 import java.util.Scanner;
 
-import fr.pizzeria.dao.IPizzaMemDao;
+import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.DeletePizzaException;
-import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.exception.PizzaException;
 
 public class SupprimerPizzaService extends MenuService {
 	
-	IPizzaMemDao dao;
+	IPizzaDao dao;
 
 	
 	
-	public IPizzaMemDao getDao() {
+	public IPizzaDao getDao() {
 		return dao;
 	}
 
-	public void setDao(IPizzaMemDao dao) {
+	public void setDao(IPizzaDao dao) {
 		this.dao = dao;
 	}
 
 	@Override
-	public void executeUC(Scanner scanner) throws StockageException {
+	public void executeUC(Scanner scanner) throws PizzaException {
 		System.out.println("Suppression d'une pizza");
 		System.out.println("Code de la pizza à supprimer?");
 		String codeASuppr = scanner.next();

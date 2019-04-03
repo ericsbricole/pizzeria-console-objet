@@ -12,10 +12,11 @@ import fr.pizzeria.console.service.ListerPizzasService;
 import fr.pizzeria.console.service.MenuService;
 import fr.pizzeria.console.service.ModifierPizzaService;
 import fr.pizzeria.console.service.SupprimerPizzaService;
-import fr.pizzeria.dao.IPizzaMemDao;
+import fr.pizzeria.dao.IPizzaDao;
+import fr.pizzeria.dao.PizzaJdbc;
 import fr.pizzeria.dao.PizzaMemDao;
 import fr.pizzeria.exception.SavePizzaException;
-import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.model.Pizza;
 
@@ -23,7 +24,7 @@ public class PizzeriaAdminConsole {
 
 	public static void main(String[] args) {
 
-		IPizzaMemDao dao = new PizzaMemDao();
+		IPizzaDao dao = new PizzaJdbc();
 		ListerPizzasService listerService = new ListerPizzasService();
 		listerService.setDao(dao);
 		AjouterPizzaService ajouterService = new AjouterPizzaService();
@@ -67,7 +68,7 @@ public class PizzeriaAdminConsole {
 			if (choice == 4){
 				try {
 					supprimerService.executeUC(sc);
-				} catch (StockageException e) {
+				} catch (PizzaException e) {
 					System.err.println(e.getMessage());
 				}
 				
