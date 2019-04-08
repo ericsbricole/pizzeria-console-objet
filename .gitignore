@@ -1,0 +1,7 @@
+target
+.settings
+.project
+.classpath
+*.log
+src/main/resources/*.log
+src/test/resources/*.log

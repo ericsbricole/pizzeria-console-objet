@@ -5,16 +5,18 @@ import fr.pizzeria.model.Pizza;
 
 public class PizzaMemDao implements IPizzaDao{
 	
-	private Pizza[] pizzas = {
-			new Pizza("PEP", "Pepperroni", 12.50, CategoriePizza.SANS_VIANDE),
-			new Pizza("MAR", "Margherita", 14.00, CategoriePizza.SANS_VIANDE),
-			new Pizza("REIN", "La Reine", 11.50, CategoriePizza.POISSON),
-			new Pizza("FRO", "La 4 fromages", 12.00, CategoriePizza.SANS_VIANDE),
-			new Pizza("CAN", "La cannibale", 12.50, CategoriePizza.VIANDE),
-			new Pizza("SAV", "La Savoyarde", 13.00, CategoriePizza.VIANDE),
-			new Pizza("ORI", "L'orientale", 13.50, CategoriePizza.VIANDE),
-			new Pizza("IND", "L'indienne", 14.00, CategoriePizza.VIANDE)
-	};
+	private Pizza[] pizzas = new Pizza[8];
+	
+	public PizzaMemDao(){
+		pizzas[0] = new Pizza("PEP", "Pepperroni", 12.50, CategoriePizza.SANS_VIANDE);
+		pizzas[1] = new Pizza("MAR", "Margherita", 14.00, CategoriePizza.SANS_VIANDE);
+		pizzas[2] = new Pizza("REIN", "La Reine", 11.50, CategoriePizza.POISSON);
+		pizzas[3] = new Pizza("FRO", "La 4 fromages", 12.00, CategoriePizza.SANS_VIANDE);
+		pizzas[4] = new Pizza("CAN", "La cannibale", 12.50, CategoriePizza.VIANDE);
+		pizzas[5] = new Pizza("SAV", "La Savoyarde", 13.00, CategoriePizza.VIANDE);
+		pizzas[6] = new Pizza("ORI", "L'orientale", 13.50, CategoriePizza.VIANDE);
+		pizzas[7] = new Pizza("IND", "L'indienne", 14.00, CategoriePizza.VIANDE);
+	}
 		
 	public Pizza[] getPizzas() {
 		return pizzas;

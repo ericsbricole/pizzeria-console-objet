@@ -1,6 +1,10 @@
 package fr.pizzeria.console.service;
 
 import java.util.Scanner;
+import java.util.logging.LogManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.DeletePizzaException;
@@ -8,9 +12,7 @@ import fr.pizzeria.exception.PizzaException;
 
 public class SupprimerPizzaService extends MenuService {
 	
-	IPizzaDao dao;
-
-	
+	private IPizzaDao dao;
 	
 	public IPizzaDao getDao() {
 		return dao;

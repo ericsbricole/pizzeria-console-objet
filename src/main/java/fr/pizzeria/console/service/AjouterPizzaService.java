@@ -2,6 +2,9 @@ package fr.pizzeria.console.service;
 
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.dao.PizzaMemDao;
 import fr.pizzeria.exception.SavePizzaException;
@@ -10,6 +13,7 @@ import fr.pizzeria.model.Pizza;
 
 public class AjouterPizzaService extends MenuService {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(MenuService.class);
 	private IPizzaDao dao;
 
 	public IPizzaDao getDao() {

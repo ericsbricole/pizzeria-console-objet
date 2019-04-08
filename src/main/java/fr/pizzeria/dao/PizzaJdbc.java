@@ -14,7 +14,13 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class PizzaJdbc implements IPizzaDao {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(PizzaJdbc.class);
+	
 	private String url;
 	private String user;
 	private String pass;
@@ -55,8 +61,10 @@ public class PizzaJdbc implements IPizzaDao {
 			return pizzas;
 			
 		} catch (ClassNotFoundException e) {
-			throw new PizzaException("la classe driver n'a pas pu être chargée", e);
+			LOG.error("La classe driver n'a pas pu être chargée:\n", e);
+			throw new PizzaException("La classe driver n'a pas pu être chargée", e);
 		} catch (SQLException e) {
+			LOG.error("Problème de connection à la base de donnée:\n", e);
 			throw new PizzaException("Problème de connection à la base de donnée", e);
 		}
 	}
@@ -76,8 +84,10 @@ public class PizzaJdbc implements IPizzaDao {
 			pst.executeUpdate(sql);
 			
 		} catch (ClassNotFoundException e) {
+			LOG.error("La classe driver n'a pas pu être chargée:\n", e);
 			throw new PizzaException("la classe driver n'a pas pu être chargée", e);
 		} catch (SQLException e) {
+			LOG.error("Problème de connection à la base de donnée:\n", e);
 			throw new PizzaException("Problème de connection à la base de donnée", e);
 		}
 		
@@ -95,8 +105,10 @@ public class PizzaJdbc implements IPizzaDao {
 			pst.executeUpdate(sql);
 			
 		} catch (ClassNotFoundException e) {
+			LOG.error("La classe driver n'a pas pu être chargée:\n", e);
 			throw new PizzaException("la classe driver n'a pas pu être chargée", e);
 		} catch (SQLException e) {
+			LOG.error("Problème de connection à la base de donnée");
 			throw new PizzaException("Problème de connection à la base de donnée", e);
 		}
 	}
@@ -111,8 +123,10 @@ public class PizzaJdbc implements IPizzaDao {
 			pst.executeUpdate(sql);
 			
 		} catch (ClassNotFoundException e) {
+			LOG.error("La classe driver n'a pas pu être chargée:\n", e);
 			throw new PizzaException("la classe driver n'a pas pu être chargée", e);
 		} catch (SQLException e) {
+			LOG.error("Problème de connection à la base de donnée");
 			throw new PizzaException("Problème de connection à la base de donnée", e);
 		}
 		
@@ -120,13 +134,11 @@ public class PizzaJdbc implements IPizzaDao {
 
 	@Override
 	public Pizza findPizzaByCode(String codePizza) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean pizzaExists(String codePizza) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
