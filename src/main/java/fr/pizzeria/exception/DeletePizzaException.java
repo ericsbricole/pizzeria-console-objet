@@ -6,4 +6,9 @@ public class DeletePizzaException extends PizzaException {
 		super(msg);
 	}
 
+	public DeletePizzaException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	
 }

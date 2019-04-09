@@ -1,4 +1,4 @@
-package fr.pizzeria.console.service;
+package fr.pizzeria.service;
 
 import java.util.Scanner;
 
@@ -9,7 +9,15 @@ import fr.pizzeria.model.Pizza;
 
 public class ModifierPizzaService extends MenuService{
 
-	private IPizzaDao dao;	
+	private IPizzaDao dao;
+	
+	
+
+	public ModifierPizzaService() {	}
+	
+	public ModifierPizzaService(IPizzaDao dao) {
+		this.dao = dao;
+	}
 
 	public IPizzaDao getDao() {
 		return dao;
@@ -20,7 +28,7 @@ public class ModifierPizzaService extends MenuService{
 	}
 
 	@Override
-	public void executeUC(Scanner scanner) throws UpdatePizzaException {
+	public void executeUC(Scanner scanner){
 		System.out.println("Mise à jour d'une pizza");
 		System.out.println("Veuillez saisir le code de la pizza à modifier.");
 		String codeAModifier = scanner.next();

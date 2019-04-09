@@ -37,11 +37,8 @@ public class PizzaJdbc implements IPizzaDao {
 	public Pizza[] findAllPizzas() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			
 			Connection cn = DriverManager.getConnection(url, user, pass);
-			
 			Statement st = cn.createStatement();
-			
 			String query = "select * from pizzas;";
 			ResultSet rs = st.executeQuery(query);
 			

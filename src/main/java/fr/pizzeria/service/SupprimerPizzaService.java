@@ -1,4 +1,4 @@
-package fr.pizzeria.console.service;
+package fr.pizzeria.service;
 
 import java.util.Scanner;
 import java.util.logging.LogManager;

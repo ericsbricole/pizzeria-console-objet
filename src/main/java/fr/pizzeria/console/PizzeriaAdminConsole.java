@@ -10,18 +10,20 @@ import org.slf4j.LoggerFactory;
 
 import com.sun.org.apache.bcel.internal.generic.DALOAD;
 
-import fr.pizzeria.console.service.AjouterPizzaService;
-import fr.pizzeria.console.service.ListerPizzasService;
-import fr.pizzeria.console.service.MenuService;
-import fr.pizzeria.console.service.ModifierPizzaService;
-import fr.pizzeria.console.service.SupprimerPizzaService;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.dao.PizzaJdbc;
 import fr.pizzeria.dao.PizzaMemDao;
 import fr.pizzeria.exception.SavePizzaException;
+import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.model.Pizza;
+import fr.pizzeria.service.AjouterPizzaService;
+import fr.pizzeria.service.ListerPizzasService;
+import fr.pizzeria.service.MenuService;
+import fr.pizzeria.service.ModifierPizzaService;
+import fr.pizzeria.service.ModifierPizzaServiceTest;
+import fr.pizzeria.service.SupprimerPizzaService;
 
 public class PizzeriaAdminConsole {
 
@@ -57,8 +59,8 @@ public class PizzeriaAdminConsole {
 			if (choice == 2) {
 				try {
 					ajouterService.executeUC(sc);
-				} catch (SavePizzaException e) {
-					LOG.error(e.getMessage(), e.getStackTrace());
+				} catch (PizzaException e) {
+					LOG.error("erreur pendant l'ajout de la pizza ", e);
 					System.err.println(e.getMessage());
 				}
 			}
@@ -66,8 +68,8 @@ public class PizzeriaAdminConsole {
 			if (choice == 3) {
 				try {
 					modifierService.executeUC(sc);
-				} catch (UpdatePizzaException e) {
-					LOG.error("erreur pendant ajout de la pizza ", e);
+				} catch (PizzaException e) {
+					LOG.error("erreur pendant la modification de la pizza ", e);
 					System.err.println(e.getMessage());
 				}
 			}
@@ -76,7 +78,7 @@ public class PizzeriaAdminConsole {
 				try {
 					supprimerService.executeUC(sc);
 				} catch (PizzaException e) {
-					LOG.error(e.getMessage(), e.getStackTrace());
+					LOG.error("erreur pendant la suppression de la pizza ", e);
 					System.err.println(e.getMessage());
 				}
 
