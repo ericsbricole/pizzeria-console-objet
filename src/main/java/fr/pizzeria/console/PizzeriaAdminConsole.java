@@ -1,28 +1,16 @@
 package fr.pizzeria.console;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.org.apache.bcel.internal.generic.DALOAD;
 
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.dao.PizzaJdbc;
-import fr.pizzeria.dao.PizzaMemDao;
-import fr.pizzeria.exception.SavePizzaException;
-import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.PizzaException;
-import fr.pizzeria.exception.UpdatePizzaException;
-import fr.pizzeria.model.Pizza;
 import fr.pizzeria.service.AjouterPizzaService;
 import fr.pizzeria.service.ListerPizzasService;
-import fr.pizzeria.service.MenuService;
 import fr.pizzeria.service.ModifierPizzaService;
-import fr.pizzeria.service.ModifierPizzaServiceTest;
 import fr.pizzeria.service.SupprimerPizzaService;
 
 public class PizzeriaAdminConsole {

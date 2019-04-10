@@ -13,18 +13,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PizzaJdbc implements IPizzaDao {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(PizzaJdbc.class);
-	
+
 	private String url;
 	private String user;
 	private String pass;
-	
+
 	public PizzaJdbc() {
 		super();
 		ResourceBundle bundle = ResourceBundle.getBundle("jdbc");
@@ -33,100 +34,78 @@ public class PizzaJdbc implements IPizzaDao {
 		pass = bundle.getString("jdbc.pass");
 	}
 
+	private interface functionSQL<X,Y>{
+		Y apply(X x) throws SQLException;
+	}
+
+	public <O> O executerSQL(functionSQL<Connection, O> fn){
+		try(Connection cn = DriverManager.getConnection(url, user, pass)){
+			return fn.apply(cn);			
+		} catch (SQLException e) {
+			throw new PizzaException("Problème lors de l'exécution de la requète ", e);
+		}
+	}
+
 	@Override
 	public Pizza[] findAllPizzas() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection cn = DriverManager.getConnection(url, user, pass);
-			Statement st = cn.createStatement();
-			String query = "select * from pizzas;";
-			ResultSet rs = st.executeQuery(query);
-			
-			rs.last();
-			int numberOfPizzas = rs.getRow();
-			rs.first();
-			Pizza[] pizzas = new Pizza[numberOfPizzas];
-			int cpt = 0;
-			while (rs.next()){
-				String code = rs.getString(2);
-				String nom = rs.getString(3);
-				float prix = rs.getFloat(4);
-				CategoriePizza categoriePizza = CategoriePizza.valueOf(rs.getString(5));
-				pizzas[cpt] = new Pizza(code,nom,prix,categoriePizza);
-				++cpt;
+
+		return executerSQL( cn ->{
+			String sql = "select * from pizzas;";
+			try(Statement st = cn.createStatement();
+					ResultSet rs = st.executeQuery(sql);
+					) {
+				rs.last();
+				int numberOfPizzas = rs.getRow();
+				rs.first();
+				Pizza[] pizzas = new Pizza[numberOfPizzas];
+				int cpt = 0;
+				while (rs.next()){
+					String code = rs.getString(2);
+					String nom = rs.getString(3);
+					float prix = rs.getFloat(4);
+					CategoriePizza categoriePizza = CategoriePizza.valueOf(rs.getString(5));
+					pizzas[cpt] = new Pizza(code,nom,prix,categoriePizza);
+					++cpt;
+				}
+				return pizzas;
 			}
-			return pizzas;
-			
-		} catch (ClassNotFoundException e) {
-			LOG.error("La classe driver n'a pas pu être chargée:\n", e);
-			throw new PizzaException("La classe driver n'a pas pu être chargée", e);
-		} catch (SQLException e) {
-			LOG.error("Problème de connection à la base de donnée:\n", e);
-			throw new PizzaException("Problème de connection à la base de donnée", e);
-		}
+		});
 	}
 
 	@Override
 	public void saveNewPizza(Pizza pizza) {
-		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			
-			
-			Connection cn = DriverManager.getConnection(url, user, pass);
-			
+		executerSQL( cn -> {
 			String sql = "INSERT INTO pizzas(code,nom,prix,categorie) "
 					+ "VALUES('" + pizza.getCode() + "','" + pizza.getLibelle() + "'," + pizza.getPrix() + ",'" + pizza.getCategoriePizza().toString()+"')";
-			PreparedStatement pst = cn.prepareStatement(sql);
-			pst.executeUpdate(sql);
-			
-		} catch (ClassNotFoundException e) {
-			LOG.error("La classe driver n'a pas pu être chargée:\n", e);
-			throw new PizzaException("la classe driver n'a pas pu être chargée", e);
-		} catch (SQLException e) {
-			LOG.error("Problème de connection à la base de donnée:\n", e);
-			throw new PizzaException("Problème de connection à la base de donnée", e);
-		}
-		
-		
+			try (PreparedStatement pst = cn.prepareStatement(sql)) {
+				pst.executeUpdate(sql);
+				return null;
+			}
+		});
 	}
 
 	@Override
 	public void updatePizza(String codePizza, Pizza pizza) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection cn = DriverManager.getConnection(url, user, pass);
-			String sql = "UPDATE pizzas SET code='" + pizza.getCode() + "',nom='" + pizza.getLibelle() + "',prix=" + pizza.getPrix() + ",categorie='" + pizza.getCategoriePizza().toString()+"'"
-					+ " WHERE code='" + codePizza+"'";
-			PreparedStatement pst = cn.prepareStatement(sql);
-			pst.executeUpdate(sql);
-			
-		} catch (ClassNotFoundException e) {
-			LOG.error("La classe driver n'a pas pu être chargée:\n", e);
-			throw new PizzaException("la classe driver n'a pas pu être chargée", e);
-		} catch (SQLException e) {
-			LOG.error("Problème de connection à la base de donnée");
-			throw new PizzaException("Problème de connection à la base de donnée", e);
-		}
+		executerSQL( cn -> {
+			String sql = "UPDATE pizzas SET code='" + pizza.getCode() + "',nom='" + pizza.getLibelle() + "',prix=" + pizza.getPrix() + ",categorie='"
+					+ pizza.getCategoriePizza().toString()+"' WHERE code='" + codePizza+"'";
+			try (Statement st = cn.createStatement()){
+				st.executeUpdate(sql);
+				return null;
+			}
+		});
 	}
 
 	@Override
 	public void deletePizza(String codePizza) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection cn = DriverManager.getConnection(url, user, pass);
+		executerSQL( cn -> {
 			String sql = "DELETE FROM pizzas WHERE code = '" + codePizza+"'";
-			PreparedStatement pst = cn.prepareStatement(sql);
-			pst.executeUpdate(sql);
-			
-		} catch (ClassNotFoundException e) {
-			LOG.error("La classe driver n'a pas pu être chargée:\n", e);
-			throw new PizzaException("la classe driver n'a pas pu être chargée", e);
-		} catch (SQLException e) {
-			LOG.error("Problème de connection à la base de donnée");
-			throw new PizzaException("Problème de connection à la base de donnée", e);
-		}
-		
+			try(PreparedStatement pst = cn.prepareStatement(sql)){
+				pst.executeUpdate(sql);
+				return null;
+			}
+		});
+
 	}
 
 	@Override
@@ -139,5 +118,5 @@ public class PizzaJdbc implements IPizzaDao {
 		return false;
 	}
 
-	
+
 }
