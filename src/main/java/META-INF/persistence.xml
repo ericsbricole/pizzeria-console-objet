@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="pizzeria-console-objet">
+	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+	<class>fr.pizzeria.model.Pizza</class>
+	
+	<properties>
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://babd70zo8n9wkthijaa3-mysql.services.clever-cloud.com:3306/babd70zo8n9wkthijaa3" />
+			<property name="javax.persistence.jdbc.user" value="uoayv3o85eq5cy6h" />
+			<property name="javax.persistence.jdbc.password" value="7xaSWn82NIupQxyXaDro" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<!-- desactiver l'autodetection des classes de type @Entity -->
+			<property name="hibernate.archive.autodetection" value="" />
+			<!-- Affichage des requêtes SQL -->
+			<property name="hibernate.show_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>

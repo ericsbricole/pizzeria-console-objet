@@ -50,7 +50,7 @@ public class PizzaJdbc implements IPizzaDao {
 	public Pizza[] findAllPizzas() {
 
 		return executerSQL( cn ->{
-			String sql = "select * from pizzas;";
+			String sql = "select * from PIZZAS;";
 			try(Statement st = cn.createStatement();
 					ResultSet rs = st.executeQuery(sql);
 					) {
@@ -75,7 +75,7 @@ public class PizzaJdbc implements IPizzaDao {
 	@Override
 	public void saveNewPizza(Pizza pizza) {
 		executerSQL( cn -> {
-			String sql = "INSERT INTO pizzas(code,nom,prix,categorie) "
+			String sql = "INSERT INTO PIZZAS(code,nom,prix,categorie) "
 					+ "VALUES('" + pizza.getCode() + "','" + pizza.getLibelle() + "'," + pizza.getPrix() + ",'" + pizza.getCategoriePizza().toString()+"')";
 			try (PreparedStatement pst = cn.prepareStatement(sql)) {
 				pst.executeUpdate(sql);
@@ -87,7 +87,7 @@ public class PizzaJdbc implements IPizzaDao {
 	@Override
 	public void updatePizza(String codePizza, Pizza pizza) {
 		executerSQL( cn -> {
-			String sql = "UPDATE pizzas SET code='" + pizza.getCode() + "',nom='" + pizza.getLibelle() + "',prix=" + pizza.getPrix() + ",categorie='"
+			String sql = "UPDATE PIZZAS SET code='" + pizza.getCode() + "',nom='" + pizza.getLibelle() + "',prix=" + pizza.getPrix() + ",categorie='"
 					+ pizza.getCategoriePizza().toString()+"' WHERE code='" + codePizza+"'";
 			try (Statement st = cn.createStatement()){
 				st.executeUpdate(sql);
@@ -99,23 +99,48 @@ public class PizzaJdbc implements IPizzaDao {
 	@Override
 	public void deletePizza(String codePizza) {
 		executerSQL( cn -> {
-			String sql = "DELETE FROM pizzas WHERE code = '" + codePizza+"'";
+			String sql = "DELETE FROM PIZZAS WHERE code = '" + codePizza+"'";
 			try(PreparedStatement pst = cn.prepareStatement(sql)){
 				pst.executeUpdate(sql);
 				return null;
 			}
 		});
-
 	}
 
 	@Override
 	public Pizza findPizzaByCode(String codePizza) {
-		return null;
+		return executerSQL( cn -> {
+			String sql = "SELECT * FROM PIZZAS WHERE p.code = ?";
+			Pizza pizza = null;
+			
+			try(PreparedStatement pst = cn.prepareStatement(sql)){
+				pst.setString(1, codePizza);
+				ResultSet rs = pst.executeQuery();
+				if (rs.getFetchSize() != 1)
+					return null;
+				String code = rs.getString(2);
+				String libelle = rs.getString(3);
+				float prix = rs.getFloat(4);
+				CategoriePizza categoriePizza = CategoriePizza.valueOf(rs.getString(5));
+				Pizza p = new Pizza(code, libelle, prix, categoriePizza);
+				return p;
+			}
+		});
 	}
 
 	@Override
 	public boolean pizzaExists(String codePizza) {
-		return false;
+		return executerSQL( cn -> {
+			String sql = "SELECT * FROM PIZZAS WHERE p.code = ?";
+			Pizza pizza = null;
+			
+			try(PreparedStatement pst = cn.prepareStatement(sql)){
+				pst.setString(1, codePizza);
+				ResultSet rs = pst.executeQuery();
+				boolean exists = rs.getFetchSize() == 1;
+				return exists;
+			}
+		});
 	}
 
 

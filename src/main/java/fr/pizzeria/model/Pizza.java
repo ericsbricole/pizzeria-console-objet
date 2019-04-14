@@ -1,36 +1,57 @@
 package fr.pizzeria.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author Pennecot
- * Cette classe repr�sente une pizza
+ * Cette classe représente une pizza
  */
+@Entity
+@Table(name="PIZZAS")
 public class Pizza {
 
 	/**
 	 * identifiant de l'instance
 	 */
+	@Id
+	@Column(name="ID")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	/**
 	 * code de la pizza
 	 */
+	@Column(name="CODE")
 	private String code;
 	
 	/**
 	 * libelle de la pizza
 	 */
+	@Column(name="LIBELLE")
 	private String libelle;
 	/**
 	 * prix de la pizza en euro
 	 */
+	@Column(name="PRIX")
 	private double prix;
 	/**
-	 * compteur du nombre de pizza instanci�e
+	 * compteur du nombre de pizza instanciée
 	 */
+	@Transient
 	public static int cpt = 0;
 	
+	@Enumerated(EnumType.STRING)
 	private CategoriePizza categoriePizza;
+	
+	public Pizza() { }
 	
 	/**
 	 * @param code
